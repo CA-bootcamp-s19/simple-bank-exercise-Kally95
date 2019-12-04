@@ -100,6 +100,8 @@ contract SimpleBank {
         require(withdrawAmount <= balances[msg.sender], "You have insufficient funds!");
         balances[msg.sender] -= withdrawAmount;
         emit LogWithdrawal(msg.sender, withdrawAmount, balances[msg.sender]);
+        (bool success, ) = msg.sender.call.value(withdrawAmount)("");
+        require(success, "Error: Transfer failed.");
         return balances[msg.sender];
     }
 }
