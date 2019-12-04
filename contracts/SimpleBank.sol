@@ -81,6 +81,7 @@ contract SimpleBank {
     function deposit() public payable returns (uint) {
         /* Add the amount to the user's balance, call the event associated with a deposit,
           then return the balance of the user */
+        require(msg.value > 0); // Prevents me from spamming deposit with 0 value
         uint256 amountPaid = msg.value;
         balances[msg.sender] = amountPaid;
         emit LogDepositMade(msg.sender, msg.value);
